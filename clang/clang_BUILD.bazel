@@ -1,49 +1,56 @@
+load("@mousetrap_toolchains//toolchain:toolchain_tool.bzl", "toolchain_tool")
 load("@mousetrap_toolchains//clang:clang_toolchain.bzl", "clang_toolchain")
 
 clang_toolchain(
   name = "clang",
+  tools = [
+    ":cc",
+    ":cxx",
+    ":ar",
+    ":strip",
+  ],
   all_features = [
     "@mousetrap_toolchains//:clang_features",
   ],
 )
 
-filegroup(
+toolchain_tool(
   name = "cc",
-  srcs = [
-    "bin/clang",
+  tool = "bin/clang",
+  deps = [
     "bin/clang-{major_version}",
   ],
 )
 
-filegroup(
+toolchain_tool(
   name = "cxx",
-  srcs = [
-    "bin/clang++",
+  tool = "bin/clang++",
+  deps = [
     ":cc",
   ],
 )
 
-filegroup(
+toolchain_tool(
   name = "ar",
-  srcs = ["bin/llvm-ar"],
+  tool = "bin/llvm-ar",
 )
 
-filegroup(
+toolchain_tool(
   name = "ld",
-  srcs = [
-    "bin/ld.lld",
-    "bin/lld"
+  tool = "bin/ld.lld",
+  deps = [
+    "bin/lld",
   ],
 )
 
-filegroup(
+toolchain_tool(
   name = "strip",
-  srcs = ["bin/llvm-strip"],
+  tool = "bin/llvm-strip",
 )
 
-filegroup(
+toolchain_tool(
   name = "objcopy",
-  srcs = ["bin/llvm-objcopy"],
+  tool = "bin/llvm-objcopy",
 )
 
 filegroup(

@@ -1,6 +1,6 @@
-#include <iostream>
+#include "tests/say.h"
 
 int main(int argc, char* argv[]) {
-  std::cout << "Hello, World!\n";
+  Say("Hello", "World");
   return 0;
 }

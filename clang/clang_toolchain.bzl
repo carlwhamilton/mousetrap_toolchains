@@ -1,13 +1,10 @@
 load("@mousetrap_toolchains//toolchain:toolchain_config.bzl", "toolchain_config")
 
-def clang_toolchain(name, all_features):
+def clang_toolchain(name, tools, all_features):
   toolchain_config_name = "%s_config" % name
   toolchain_config(
     name = toolchain_config_name,
-    cc = ":cc",
-    cxx = ":cxx",
-    ar = ":ar",
-    strip = ":strip",
+    tools = tools,
     all_features = all_features,
     system_includes = ["/usr/include"],
     supports_start_end_lib = True)

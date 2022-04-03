@@ -2,9 +2,9 @@ load(":toolchain_feature.bzl", "FeatureSetInfo", "feature_from_flags", "merge_fe
 load("@rules_cc//cc:action_names.bzl", "ACTION_NAMES")
 load(
   "@rules_cc//cc:cc_toolchain_config_lib.bzl",
+  "ToolInfo",
   "action_config",
   "flag_group",
-  "tool",
   "variable_with_value")
 
 def _base_preprocess_flags():
@@ -111,9 +111,10 @@ def _base_feature():
     lib_flags = _base_lib_flags())
 
 def _toolchain_tool(ctx, name):
-  target = getattr(ctx.attr, name)
-  files = target.files.to_list()
-  return tool(path = files[0].short_path)
+  for tool in ctx.attr.tools:
+    if tool.label.name == name:
+      return tool[ToolInfo]
+  fail("Failed to find {name} tool".format(name = name))
 
 def _toolchain_action(action, tool):
   return action_config(action, tools = [tool])
@@ -171,10 +172,7 @@ toolchain_config = rule(
     "target_cpu": attr.string(default = "k8"),
     "target_platform": attr.string(default = "linux"),
     "target_libc": attr.string(default = "libc"),
-    "cc": attr.label(mandatory = True),
-    "cxx": attr.label(mandatory = True),
-    "ar": attr.label(mandatory = True),
-    "strip": attr.label(mandatory = True),
+    "tools": attr.label_list(providers = [ToolInfo]),
     "all_features": attr.label_list(providers=[FeatureSetInfo]),
     "system_includes": attr.string_list(default = []),
     "supports_start_end_lib": attr.bool(default = False),
