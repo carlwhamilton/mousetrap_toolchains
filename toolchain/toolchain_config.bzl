@@ -1,8 +1,7 @@
-load(":toolchain_feature.bzl", "feature_from_flags")
+load(":toolchain_feature.bzl", "FeatureSetInfo", "feature_from_flags", "merge_feature_sets")
 load("@rules_cc//cc:action_names.bzl", "ACTION_NAMES")
 load(
   "@rules_cc//cc:cc_toolchain_config_lib.bzl",
-  "FeatureInfo",
   "action_config",
   "flag_group",
   "tool",
@@ -140,9 +139,10 @@ def _toolchain_config(ctx):
       "supports_start_end_lib",
       enabled = ctx.attr.supports_start_end_lib),
     _base_feature(),
-  ] + [
-    feature[FeatureInfo] for feature in ctx.attr.all_features
   ]
+
+  all_features = merge_feature_sets(ctx.attr.all_features)
+  features.extend(all_features.values())
 
   host_system_name = "x86_64-unknown-linux-gnu"
   target_cpu = ctx.attr.target_cpu
@@ -175,7 +175,7 @@ toolchain_config = rule(
     "cxx": attr.label(mandatory = True),
     "ar": attr.label(mandatory = True),
     "strip": attr.label(mandatory = True),
-    "all_features": attr.label_list(providers=[FeatureInfo]),
+    "all_features": attr.label_list(providers=[FeatureSetInfo]),
     "system_includes": attr.string_list(default = []),
     "supports_start_end_lib": attr.bool(default = False),
   },

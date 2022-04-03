@@ -3,12 +3,7 @@ load("@mousetrap_toolchains//clang:clang_toolchain.bzl", "clang_toolchain")
 clang_toolchain(
   name = "clang",
   all_features = [
-    "@mousetrap_toolchains//:common",
-    "@mousetrap_toolchains//:fastbuild",
-    "@mousetrap_toolchains//:dbg",
-    "@mousetrap_toolchains//:opt",
-    "@mousetrap_toolchains//:static_linking_mode",
-    "@mousetrap_toolchains//:dynamic_linking_mode",
+    "@mousetrap_toolchains//:clang_features",
   ],
 )
 

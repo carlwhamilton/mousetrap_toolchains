@@ -1,4 +1,8 @@
-load("//toolchain:toolchain_feature.bzl", "toolchain_feature")
+load(
+  "//toolchain:toolchain_feature.bzl",
+  "toolchain_feature",
+  "toolchain_feature_group",
+  "toolchain_feature_set")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -24,41 +28,52 @@ toolchain_feature(
   ],
 )
 
-toolchain_feature(
+toolchain_feature_group(
   name = "compilation_mode",
 )
 
 toolchain_feature(
   name = "fastbuild",
-  provides = [":compilation_mode"],
+  group = ":compilation_mode",
   copts = ["-O0"],
 )
 
 toolchain_feature(
   name = "dbg",
-  provides = [":compilation_mode"],
+  group = ":compilation_mode",
   defines = ["NDEBUG"],
   copts = ["-g", "-O0"],
 )
 
 toolchain_feature(
   name = "opt",
-  provides = [":compilation_mode"],
+  group = ":compilation_mode",
   copts = ["-O2"],
 )
 
-toolchain_feature(
+toolchain_feature_group(
   name = "linking_mode",
 )
 
 toolchain_feature(
   name = "static_linking_mode",
-  provides = [":linking_mode"],
+  group = ":linking_mode",
   linkopts = ["-static"],
 )
 
 toolchain_feature(
   name = "dynamic_linking_mode",
-  provides = [":linking_mode"],
+  group = ":linking_mode",
 )
 
+toolchain_feature_set(
+  name = "clang_features",
+  deps = [
+    ":common",
+    ":fastbuild",
+    ":dbg",
+    ":opt",
+    ":static_linking_mode",
+    ":dynamic_linking_mode",
+  ],
+)
