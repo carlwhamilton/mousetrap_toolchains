@@ -15,6 +15,13 @@ toolchain_feature(
 )
 
 toolchain_feature(
+  name = "verbose",
+  copts = [
+    "--verbose",
+  ],
+)
+
+toolchain_feature(
   name = "pedantic",
   enabled = True,
   copts = [
@@ -80,7 +87,10 @@ toolchain_feature_set(
   name = "features",
   deps = [
     ":common",
+    ":verbose",
     ":pedantic",
+    ":threads",
+    ":cxx20",
     ":fastbuild",
     ":dbg",
     ":opt",
