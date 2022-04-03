@@ -1,14 +1,35 @@
-load(":clang_toolchain.bzl", "clang_toolchain")
+load(
+  "//toolchain:toolchain_feature.bzl",
+  "toolchain_feature",
+  "toolchain_feature_set")
 
-clang_toolchain(
-  name = "clang",
-  repo = "clang",
-  all_features = [
-    "//:common",
-    "//:fastbuild",
-    "//:dbg",
-    "//:opt",
-    "//:static_linking_mode",
-    "//:dynamic_linking_mode",
+package(default_visibility = ["//visibility:public"])
+
+toolchain_feature(
+  name = "use_libcxx",
+  enabled = True,
+  cxxopts = [
+    "-stdlib=libc++",
+  ],
+  libs = [
+    "c++",
+    "c++abi",
+  ],
+)
+
+toolchain_feature(
+  name = "use_lld",
+  enabled = True,
+  linkopts = [
+    "-fuse-ld=lld",
+  ],
+)
+
+toolchain_feature_set(
+  name = "features",
+  deps = [
+    ":use_libcxx",
+    ":use_lld",
+    "//toolchain:features",
   ],
 )

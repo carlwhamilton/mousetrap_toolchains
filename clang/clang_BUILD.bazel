@@ -10,7 +10,7 @@ clang_toolchain(
     ":strip",
   ],
   all_features = [
-    "@mousetrap_toolchains//:clang_features",
+    "@mousetrap_toolchains//clang:features",
   ],
 )
 
