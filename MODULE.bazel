@@ -1,0 +1,11 @@
+module(
+  name = "mousetrap_toolchains",
+  version = "0.0.1",
+  toolchains_to_register = ["@clang//:clang"]
+)
+
+bazel_dep(name = "rules_cc", version = "0.0.1")
+bazel_dep(name = "platforms", version = "0.0.4")
+
+clang = use_extension("@mousetrap_toolchains//clang:clang.bzl", "clang")
+use_repo(clang, "clang")

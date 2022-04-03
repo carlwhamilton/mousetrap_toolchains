@@ -1,0 +1,14 @@
+load(":clang_toolchain.bzl", "clang_toolchain")
+
+clang_toolchain(
+  name = "clang",
+  repo = "clang",
+  all_features = [
+    "//:common",
+    "//:fastbuild",
+    "//:dbg",
+    "//:opt",
+    "//:static_linking_mode",
+    "//:dynamic_linking_mode",
+  ],
+)

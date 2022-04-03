@@ -1,0 +1,115 @@
+load("@mousetrap_toolchains//clang:clang_toolchain.bzl", "clang_toolchain")
+
+clang_toolchain(
+  name = "clang",
+  all_features = [
+    "@mousetrap_toolchains//:common",
+    "@mousetrap_toolchains//:fastbuild",
+    "@mousetrap_toolchains//:dbg",
+    "@mousetrap_toolchains//:opt",
+    "@mousetrap_toolchains//:static_linking_mode",
+    "@mousetrap_toolchains//:dynamic_linking_mode",
+  ],
+)
+
+filegroup(
+  name = "cc",
+  srcs = [
+    "bin/clang",
+    "bin/clang-{major_version}",
+  ],
+)
+
+filegroup(
+  name = "cxx",
+  srcs = [
+    "bin/clang++",
+    ":cc",
+  ],
+)
+
+filegroup(
+  name = "ar",
+  srcs = ["bin/llvm-ar"],
+)
+
+filegroup(
+  name = "ld",
+  srcs = [
+    "bin/ld.lld",
+    "bin/lld"
+  ],
+)
+
+filegroup(
+  name = "strip",
+  srcs = ["bin/llvm-strip"],
+)
+
+filegroup(
+  name = "objcopy",
+  srcs = ["bin/llvm-objcopy"],
+)
+
+filegroup(
+  name = "all_files",
+  srcs = [":compiler_files"],
+)
+
+filegroup(
+  name = "compiler_files",
+  srcs = [
+    ":cc",
+    ":cxx",
+    ":headers",
+  ],
+)
+
+filegroup(
+  name = "ar_files",
+  srcs = [":ar"],
+)
+
+filegroup(
+  name = "linker_files",
+  srcs = [
+    ":cxx",
+    ":ld",
+    ":ar",
+    ":libs",
+  ],
+)
+
+filegroup(
+  name = "strip_files",
+  srcs = [":strip"],
+)
+
+filegroup(
+  name = "objcopy_files",
+  srcs = [":objcopy"],
+)
+
+filegroup(
+  name = "dwp_files",
+  srcs = [],
+)
+
+filegroup(
+  name = "headers",
+  srcs = glob(
+    include = [
+      "include/c++/v1/**/*",
+      "lib/clang/{version}/include/**/*",
+    ]
+  ),
+)
+
+filegroup(
+  name = "libs",
+  srcs = glob(
+    include = [
+      "lib/libc++*.a",
+    ],
+  ),
+)

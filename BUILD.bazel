@@ -1,0 +1,64 @@
+load("//toolchain:toolchain_feature.bzl", "toolchain_feature")
+
+package(default_visibility = ["//visibility:public"])
+
+toolchain_feature(
+  name = "common",
+  enabled = True,
+  copts = [
+    "-no-canonical-prefixes",
+    "-Wall",
+    "-pedantic",
+  ],
+  cxxopts = [
+    "-std=c++20",
+    "-stdlib=libc++",
+  ],
+  linkopts = [
+    "-fuse-ld=lld",
+    "-pthread",
+  ],
+  libs = [
+    "c++",
+    "c++abi",
+  ],
+)
+
+toolchain_feature(
+  name = "compilation_mode",
+)
+
+toolchain_feature(
+  name = "fastbuild",
+  provides = [":compilation_mode"],
+  copts = ["-O0"],
+)
+
+toolchain_feature(
+  name = "dbg",
+  provides = [":compilation_mode"],
+  defines = ["NDEBUG"],
+  copts = ["-g", "-O0"],
+)
+
+toolchain_feature(
+  name = "opt",
+  provides = [":compilation_mode"],
+  copts = ["-O2"],
+)
+
+toolchain_feature(
+  name = "linking_mode",
+)
+
+toolchain_feature(
+  name = "static_linking_mode",
+  provides = [":linking_mode"],
+  linkopts = ["-static"],
+)
+
+toolchain_feature(
+  name = "dynamic_linking_mode",
+  provides = [":linking_mode"],
+)
+
