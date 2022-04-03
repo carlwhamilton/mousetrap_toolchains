@@ -8,5 +8,5 @@ bazel_dep(name = "bazel_skylib", version = "1.2.0")
 bazel_dep(name = "platforms", version = "0.0.4")
 bazel_dep(name = "rules_cc", version = "0.0.1")
 
-clang = use_extension("@mousetrap_toolchains//clang:clang.bzl", "clang")
+clang = use_extension("@mousetrap_toolchains//bzlmod:extensions.bzl", "clang")
 use_repo(clang, "clang")

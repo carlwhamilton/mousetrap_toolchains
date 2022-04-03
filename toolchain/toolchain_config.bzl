@@ -114,7 +114,7 @@ def _toolchain_tool(ctx, name):
   for tool in ctx.attr.tools:
     if tool.label.name == name:
       return tool[ToolInfo]
-  fail("Failed to find {name} tool".format(name = name))
+  fail("Failed to find {} tool".format(name))
 
 def _toolchain_action(action, tool):
   return action_config(action, tools = [tool])
