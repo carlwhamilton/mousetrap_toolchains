@@ -1,7 +1,7 @@
 module(
   name = "mousetrap_toolchains",
   version = "0.1.1",
-  toolchains_to_register = ["@clang//:clang"]
+  toolchains_to_register = ["@clang//:all"]
 )
 
 bazel_dep(name = "bazel_skylib", version = "1.2.0")
