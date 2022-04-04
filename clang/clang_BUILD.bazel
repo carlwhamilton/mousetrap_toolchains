@@ -101,8 +101,9 @@ filegroup(
   name = "headers",
   srcs = glob(
     include = [
-      "include/**/c++/v1/**/*",
-      "lib/clang/{version}/include/**/*",
+      "include/c++/**",
+      "include/x86_64-unknown-linux-gnu/c++/**",
+      "lib/clang/{version}/include/**",
     ]
   ),
 )
@@ -112,6 +113,8 @@ filegroup(
   srcs = glob(
     include = [
       "lib/libc++*.a",
+      "lib/x86_64-unknown-linux-gnu/**",
+      "lib/clang/{version}/lib/x86_64-unknown-linux-gnu/**",
     ],
   ),
 )
