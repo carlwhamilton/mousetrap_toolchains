@@ -9,10 +9,6 @@ def _release(name, platform, sha256, version = None, archive_prefix = None):
 
 _RELEASES = dict([
   _release(
-    name = "13.0.0",
-    platform = "x86_64-linux-gnu-ubuntu-20.04",
-    sha256 = "2c2fb857af97f41a5032e9ecadf7f78d3eff389a5cd3c9ec620d24f134ceb3c8"),
-  _release(
     name = "14.0.0",
     platform = "x86_64-linux-gnu-ubuntu-18.04",
     sha256 = "61582215dafafb7b576ea30cc136be92c877ba1f1c31ddbbd372d6d65622fef5"),
@@ -45,7 +41,6 @@ def _clang_repo(repo_ctx):
     "BUILD.bazel",
     repo_ctx.attr._build_template,
     _release_substitutions(release))
-  repo_ctx.report_progress("Preparing clang {} toolchain".format(release.name))
   repo_ctx.download_and_extract(
     url = _release_url(release),
     sha256 = release.sha256,
@@ -54,7 +49,7 @@ def _clang_repo(repo_ctx):
 clang_repo = repository_rule(
   implementation = _clang_repo,
   attrs = {
-    "release": attr.string(default = "13.0.0"),
+    "release": attr.string(default = "14.0.0"),
     "_build_template": attr.label(
       default = Label("//clang:clang_BUILD.bazel"),
       allow_single_file = True)
