@@ -134,16 +134,8 @@ def _toolchain_config(ctx):
     _toolchain_action(ACTION_NAMES.strip, strip),
   ]
 
-  features = [
-    feature_from_flags("no_legacy_features"),
-    feature_from_flags(
-      "supports_start_end_lib",
-      enabled = ctx.attr.supports_start_end_lib),
-    _base_feature(),
-  ]
-
   all_features = merge_feature_sets(ctx.attr.all_features)
-  features.extend(all_features.values())
+  features = [_base_feature()] + all_features.values()
 
   host_system_name = "x86_64-unknown-linux-gnu"
   target_cpu = ctx.attr.target_cpu
@@ -164,7 +156,6 @@ def _toolchain_config(ctx):
     features = features,
     cxx_builtin_include_directories = ctx.attr.system_includes)
 
-
 toolchain_config = rule(
   implementation = _toolchain_config,
   attrs = {
@@ -175,6 +166,5 @@ toolchain_config = rule(
     "tools": attr.label_list(providers = [ToolInfo]),
     "all_features": attr.label_list(providers=[FeatureSetInfo]),
     "system_includes": attr.string_list(default = []),
-    "supports_start_end_lib": attr.bool(default = False),
   },
   provides = [CcToolchainConfigInfo])

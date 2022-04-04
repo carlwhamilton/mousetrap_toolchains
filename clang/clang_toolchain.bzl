@@ -6,8 +6,7 @@ def clang_toolchain(name, tools, all_features):
     name = toolchain_config_name,
     tools = tools,
     all_features = all_features,
-    system_includes = ["/usr/include"],
-    supports_start_end_lib = True)
+    system_includes = ["/usr/include"])
 
   cc_toolchain_name = "%s_cc_toolchain" % name
   native.cc_toolchain(

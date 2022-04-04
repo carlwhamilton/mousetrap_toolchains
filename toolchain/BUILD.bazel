@@ -6,12 +6,16 @@ load(
 
 package(default_visibility = ["//visibility:public"])
 
+# Include this feature if the linker supports the --start_lib and
+# --end_lib flags.
 toolchain_feature(
-  name = "common",
+  name = "supports_start_end_lib",
   enabled = True,
-  copts = [
-    "-no-canonical-prefixes",
-  ],
+)
+
+toolchain_feature(
+  name = "no_legacy_features",
+  enabled = True,
 )
 
 toolchain_feature(
@@ -33,7 +37,7 @@ toolchain_feature(
 toolchain_feature(
   name = "threads",
   enabled = True,
-  linkopts = [
+  copts = [
     "-pthread",
   ],
 )
@@ -86,7 +90,7 @@ toolchain_feature(
 toolchain_feature_set(
   name = "features",
   deps = [
-    ":common",
+    ":no_legacy_features",
     ":verbose",
     ":pedantic",
     ":threads",
