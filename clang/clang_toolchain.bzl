@@ -27,10 +27,6 @@ def clang_toolchain(name, target_cpu, target_os, tools, all_features):
 
   native.toolchain(
     name = name,
-    exec_compatible_with = [
-      "@platforms//cpu:x86_64",
-      "@platforms//os:linux",
-    ],
     target_compatible_with = [
       target_cpu,
       target_os,
