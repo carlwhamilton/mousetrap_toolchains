@@ -137,21 +137,18 @@ def _toolchain_config(ctx):
   all_features = merge_feature_sets(ctx.attr.all_features)
   features = [_base_feature()] + all_features.values()
 
-  host_system_name = "x86_64-unknown-linux-gnu"
-  target_cpu = ctx.attr.target_cpu
-  target_platform = ctx.attr.target_platform
-  target_libc = ctx.attr.target_libc
-  compiler = ctx.attr.compiler
+  compiler = ctx.attr.compiler.label.name
+  target_cpu = ctx.attr.target_cpu.label.name
+  target_os = ctx.attr.target_os.label.name
+  target_system_name = "%s-%s" % (target_cpu, target_os)
+
   return cc_common.create_cc_toolchain_config_info(
     ctx = ctx,
-    toolchain_identifier = "%s-%s-%s" % (target_cpu, target_platform, compiler),
-    host_system_name = host_system_name,
-    target_system_name = host_system_name,
-    target_cpu = target_cpu,
-    target_libc = target_libc,
+    toolchain_identifier = "%s-%s" % (compiler, target_system_name),
     compiler = compiler,
-    abi_version = "",
-    abi_libc_version = "",
+    target_cpu = target_cpu,
+    target_libc = ctx.attr.target_libc,
+    target_system_name = target_system_name,
     action_configs = action_configs,
     features = features,
     cxx_builtin_include_directories = ctx.attr.system_includes)
@@ -159,12 +156,12 @@ def _toolchain_config(ctx):
 toolchain_config = rule(
   implementation = _toolchain_config,
   attrs = {
-    "compiler": attr.string(default = "clang"),
-    "target_cpu": attr.string(default = "k8"),
-    "target_platform": attr.string(default = "linux"),
-    "target_libc": attr.string(default = "libc"),
+    "compiler": attr.label(mandatory = True, providers = [platform_common.ConstraintValueInfo]),
+    "target_cpu": attr.label(mandatory = True, providers = [platform_common.ConstraintValueInfo]),
+    "target_os": attr.label(mandatory = True, providers = [platform_common.ConstraintValueInfo]),
+    "target_libc": attr.string(mandatory = True),
     "tools": attr.label_list(providers = [ToolInfo]),
-    "all_features": attr.label_list(providers=[FeatureSetInfo]),
+    "all_features": attr.label_list(providers = [FeatureSetInfo]),
     "system_includes": attr.string_list(default = []),
   },
   provides = [CcToolchainConfigInfo])

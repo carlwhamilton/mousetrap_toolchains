@@ -3,6 +3,8 @@ load("@mousetrap_toolchains//clang:clang_toolchain.bzl", "clang_toolchain")
 
 clang_toolchain(
   name = "clang",
+  target_cpu = "@platforms//cpu:x86_64",
+  target_os = "@platforms//os:linux",
   tools = [
     ":cc",
     ":cxx",
@@ -16,7 +18,7 @@ clang_toolchain(
 
 toolchain_tool(
   name = "cc",
-  tool = "bin/clang",
+  executable = "bin/clang",
   deps = [
     "bin/clang-{major_version}",
   ],
@@ -24,7 +26,7 @@ toolchain_tool(
 
 toolchain_tool(
   name = "cxx",
-  tool = "bin/clang++",
+  executable = "bin/clang++",
   deps = [
     ":cc",
   ],
@@ -32,12 +34,12 @@ toolchain_tool(
 
 toolchain_tool(
   name = "ar",
-  tool = "bin/llvm-ar",
+  executable = "bin/llvm-ar",
 )
 
 toolchain_tool(
   name = "ld",
-  tool = "bin/ld.lld",
+  executable = "bin/ld.lld",
   deps = [
     "bin/lld",
   ],
@@ -45,12 +47,12 @@ toolchain_tool(
 
 toolchain_tool(
   name = "strip",
-  tool = "bin/llvm-strip",
+  executable = "bin/llvm-strip",
 )
 
 toolchain_tool(
   name = "objcopy",
-  tool = "bin/llvm-objcopy",
+  executable = "bin/llvm-objcopy",
 )
 
 filegroup(

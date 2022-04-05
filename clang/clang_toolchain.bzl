@@ -1,9 +1,13 @@
 load("@mousetrap_toolchains//toolchain:toolchain_config.bzl", "toolchain_config")
 
-def clang_toolchain(name, tools, all_features):
+def clang_toolchain(name, target_cpu, target_os, tools, all_features):
   toolchain_config_name = "%s_config" % name
   toolchain_config(
     name = toolchain_config_name,
+    compiler = "@mousetrap_toolchains//compiler:clang",
+    target_cpu = target_cpu,
+    target_os = target_os,
+    target_libc = "glibc",
     tools = tools,
     all_features = all_features,
     system_includes = ["/usr/include"])
@@ -28,8 +32,8 @@ def clang_toolchain(name, tools, all_features):
       "@platforms//os:linux",
     ],
     target_compatible_with = [
-      "@platforms//cpu:x86_64",
-      "@platforms//os:linux",
+      target_cpu,
+      target_os,
     ],
     toolchain = cc_toolchain_name,
     toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
