@@ -14,6 +14,14 @@ toolchain_feature(
 )
 
 toolchain_feature(
+  name = "pthread",
+  enabled = True,
+  copts = [
+    "-pthread",
+  ],
+)
+
+toolchain_feature(
   name = "no_legacy_features",
   enabled = True,
 )
@@ -31,14 +39,6 @@ toolchain_feature(
   copts = [
     "-Wall",
     "-pedantic",
-  ],
-)
-
-toolchain_feature(
-  name = "threads",
-  enabled = True,
-  copts = [
-    "-pthread",
   ],
 )
 
@@ -93,7 +93,6 @@ toolchain_feature_set(
     ":no_legacy_features",
     ":verbose",
     ":pedantic",
-    ":threads",
     ":cxx20",
     ":fastbuild",
     ":dbg",

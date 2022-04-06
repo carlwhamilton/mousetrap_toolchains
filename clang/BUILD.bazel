@@ -32,5 +32,6 @@ toolchain_feature_set(
     ":use_lld",
     "//toolchain:features",
     "//toolchain:supports_start_end_lib",
+    "//toolchain:pthread",
   ],
 )
