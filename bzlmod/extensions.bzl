@@ -1,4 +1,5 @@
 load("//clang:clang_repo.bzl", "clang_repo")
+load("//gcc_arm_none_eabi:gcc_repo.bzl", "gcc_repo")
 
 release = tag_class(
   attrs = {
@@ -22,6 +23,19 @@ def _clang(module_ctx):
 
 clang = module_extension(
   implementation = _clang,
+  tag_classes = {
+    "release": release,
+  },
+)
+
+def _gcc_arm_none_eabi(module_ctx):
+  release_name = None
+  for module in module_ctx.modules:
+    release_name = _get_release_name(release_name, module.tags.release)
+  gcc_repo(name = "gcc_arm_none_eabi", release = release_name)
+
+gcc_arm_none_eabi = module_extension(
+  implementation = _gcc_arm_none_eabi,
   tag_classes = {
     "release": release,
   },

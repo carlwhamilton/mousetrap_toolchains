@@ -1,0 +1,10 @@
+load("//toolchain:toolchain_feature.bzl", "toolchain_feature_set")
+
+package(default_visibility = ["//visibility:public"])
+
+toolchain_feature_set(
+  name = "features",
+  deps = [
+    "//toolchain:features",
+  ],
+)

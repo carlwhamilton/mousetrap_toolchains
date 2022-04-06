@@ -1,7 +1,10 @@
 module(
   name = "mousetrap_toolchains",
   version = "0.1.2",
-  toolchains_to_register = ["@clang//:all"]
+  toolchains_to_register = [
+    "@clang//:all",
+    "@gcc_arm_none_eabi//:all",
+  ]
 )
 
 bazel_dep(name = "bazel_skylib", version = "1.2.0")
@@ -10,3 +13,6 @@ bazel_dep(name = "rules_cc", version = "0.0.1")
 
 clang = use_extension("@mousetrap_toolchains//bzlmod:extensions.bzl", "clang")
 use_repo(clang, "clang")
+
+gcc_arm_none_eabi = use_extension("@mousetrap_toolchains//bzlmod:extensions.bzl", "gcc_arm_none_eabi")
+use_repo(gcc_arm_none_eabi, "gcc_arm_none_eabi")
