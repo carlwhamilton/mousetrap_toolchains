@@ -1,3 +1,5 @@
+_GITHUB_ARCHIVE_URL = "https://github.com/llvm/llvm-project/releases/download/llvmorg-{version}/{prefix}.tar.xz"
+
 def _release(name, platform, sha256, version = None, archive_prefix = None):
   release = struct(
     name = name,
@@ -17,17 +19,17 @@ _RELEASES = dict([
 def _get_release(name):
   release = _RELEASES.get(name)
   if not release:
-    fail("Failed to find clang release {}".format(name))
+    fail("Failed to find clang release {release}".format(release = name))
   return release
 
-def _release_prefix(release):
-  return "clang+llvm-%s-%s" % (release.version, release.platform)
+def _archive_prefix(release):
+  return "clang+llvm-{version}-{platform}".format(version = release.version, platform = release.platform)
 
-def _release_url(release):
-  archive_prefix = _release_prefix(release)
-  return "https://github.com/llvm/llvm-project/releases/download/llvmorg-%s/%s.tar.xz" % (release.version, archive_prefix)
+def _archive_url(release):
+  archive_prefix = _archive_prefix(release)
+  return _GITHUB_ARCHIVE_URL.format(version = release.version, prefix = archive_prefix)
 
-def _release_substitutions(release):
+def _build_substitutions(release):
   version = release.version
   major_version = version.split(".")[0]
   return {
@@ -40,11 +42,11 @@ def _clang_repo(repo_ctx):
   repo_ctx.template(
     "BUILD.bazel",
     repo_ctx.attr._build_template,
-    _release_substitutions(release))
+    _build_substitutions(release))
   repo_ctx.download_and_extract(
-    url = _release_url(release),
+    url = _archive_url(release),
     sha256 = release.sha256,
-    stripPrefix = _release_prefix(release))
+    stripPrefix = _archive_prefix(release))
 
 clang_repo = repository_rule(
   implementation = _clang_repo,
