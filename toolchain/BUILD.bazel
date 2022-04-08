@@ -38,6 +38,7 @@ toolchain_feature(
   enabled = True,
   copts = [
     "-Wall",
+    "-Werror",
     "-pedantic",
   ],
 )

@@ -1,10 +1,30 @@
-load("//toolchain:toolchain_feature.bzl", "toolchain_feature_set")
+load("//toolchain:toolchain_feature.bzl", "toolchain_feature", "toolchain_feature_set")
 
 package(default_visibility = ["//visibility:public"])
+
+toolchain_feature(
+  name = "embedded",
+  enabled = True,
+  copts = [
+    "-specs=nano.specs",
+    "-mcpu=cortex-m0plus",
+    "-ffunction-sections",
+    "-fdata-sections",
+  ],
+  cxxopts = [
+    "-fno-exceptions",
+    "-fno-rtti",
+  ],
+  linkopts = [
+    "-nostartfiles",
+    "-Wl,-gc-sections",
+  ],
+)
 
 toolchain_feature_set(
   name = "features",
   deps = [
+    ":embedded",
     "//toolchain:features",
   ],
 )

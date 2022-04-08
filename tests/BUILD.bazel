@@ -11,3 +11,10 @@ cc_test(
     ":say",
   ],
 )
+
+cc_binary(
+  name = "blink",
+  srcs = ["blink.cc"],
+  deps = ["blink.ld"],
+  linkopts = ["-T$(location blink.ld)"],
+)
