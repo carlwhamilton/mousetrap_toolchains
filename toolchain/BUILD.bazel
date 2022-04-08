@@ -43,6 +43,18 @@ toolchain_feature(
   ],
 )
 
+toolchain_feature(
+  name = "sections",
+  enabled = True,
+  copts = [
+    "-ffunction-sections",
+    "-fdata-sections",
+  ],
+  linkopts = [
+    "-Wl,-gc-sections",
+  ],
+)
+
 toolchain_feature_group(name = "cxx_standard")
 
 toolchain_feature(
@@ -94,6 +106,7 @@ toolchain_feature_set(
     ":no_legacy_features",
     ":verbose",
     ":pedantic",
+    ":sections",
     ":cxx20",
     ":fastbuild",
     ":dbg",

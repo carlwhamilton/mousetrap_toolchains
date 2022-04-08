@@ -8,8 +8,6 @@ toolchain_feature(
   copts = [
     "-specs=nano.specs",
     "-mcpu=cortex-m0plus",
-    "-ffunction-sections",
-    "-fdata-sections",
   ],
   cxxopts = [
     "-fno-exceptions",
@@ -17,7 +15,6 @@ toolchain_feature(
   ],
   linkopts = [
     "-nostartfiles",
-    "-Wl,-gc-sections",
   ],
 )
 
