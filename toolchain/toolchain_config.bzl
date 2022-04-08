@@ -1,11 +1,81 @@
-load(":toolchain_feature.bzl", "FeatureSetInfo", "feature_from_flags", "merge_feature_sets")
+load("@bazel_skylib//lib:dicts.bzl", "dicts")
 load("@rules_cc//cc:action_names.bzl", "ACTION_NAMES")
 load(
   "@rules_cc//cc:cc_toolchain_config_lib.bzl",
   "ToolInfo",
   "action_config",
+  "feature",
   "flag_group",
+  "flag_set",
   "variable_with_value")
+
+_PREPROCESS_FLAGS_ACTIONS = [
+  ACTION_NAMES.preprocess_assemble,
+  ACTION_NAMES.c_compile,
+  ACTION_NAMES.cpp_compile,
+]
+
+_C_FLAGS_ACTIONS = [
+  ACTION_NAMES.preprocess_assemble,
+  ACTION_NAMES.assemble,
+  ACTION_NAMES.c_compile,
+  ACTION_NAMES.cpp_compile,
+  ACTION_NAMES.cpp_link_executable,
+]
+
+_CXX_FLAGS_ACTIONS = [
+  ACTION_NAMES.cpp_compile,
+  ACTION_NAMES.cpp_link_executable,
+]
+
+_CONLY_FLAGS_ACTIONS = [
+  ACTION_NAMES.c_compile,
+  ACTION_NAMES.cpp_link_executable,
+]
+
+_ARCHIVE_FLAGS_ACTIONS = [
+  ACTION_NAMES.cpp_link_static_library,
+]
+
+_LINK_FLAGS_ACTIONS = [
+  ACTION_NAMES.cpp_link_executable,
+]
+
+_LIB_FLAGS_ACTIONS = [
+  ACTION_NAMES.cpp_link_executable,
+]
+
+def feature_from_flags(
+    name,
+    enabled = False,
+    provides = [],
+    preprocess_flags = [],
+    c_flags = [],
+    cxx_flags = [],
+    conly_flags = [],
+    archive_flags = [],
+    link_flags = [],
+    lib_flags = []):
+  """Returns a feature constructed from the given lists of flag_groups."""
+  return feature(
+    name = name,
+    enabled = enabled,
+    provides = provides,
+    flag_sets = [
+      flag_set(actions = _PREPROCESS_FLAGS_ACTIONS, flag_groups = preprocess_flags),
+      flag_set(actions = _C_FLAGS_ACTIONS, flag_groups = c_flags),
+      flag_set(actions = _CXX_FLAGS_ACTIONS, flag_groups = cxx_flags),
+      flag_set(actions = _CONLY_FLAGS_ACTIONS, flag_groups = conly_flags),
+      flag_set(actions = _ARCHIVE_FLAGS_ACTIONS, flag_groups = archive_flags),
+      flag_set(actions = _LINK_FLAGS_ACTIONS, flag_groups = link_flags),
+      flag_set(actions = _LIB_FLAGS_ACTIONS, flag_groups = lib_flags),
+    ])
+
+# features is a dictionary from a label to its associated FeatureInfo.
+FeatureSetInfo = provider(fields = ["features"])
+
+def merge_feature_sets(feature_sets):
+  return dicts.add(*[feature_set[FeatureSetInfo].features for feature_set in feature_sets])
 
 def _base_preprocess_flags():
   return [
