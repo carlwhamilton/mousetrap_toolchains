@@ -1,3 +1,5 @@
+load ("//gcc_arm_none_eabi:linker_script.bzl", "linker_script")
+
 cc_library(
   name = "say",
   hdrs = ["say.h"],
@@ -15,6 +17,10 @@ cc_test(
 cc_binary(
   name = "blink",
   srcs = ["blink.cc"],
-  deps = ["blink.ld"],
-  linkopts = ["-T$(location blink.ld)"],
+  deps = [":blink_ld"],
+)
+
+linker_script(
+  name = "blink_ld",
+  script = "blink.ld",
 )
