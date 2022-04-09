@@ -1,6 +1,13 @@
+load(":gcc_toolchain.bzl", "gcc_toolchain")
 load("//toolchain:toolchain_feature.bzl", "toolchain_feature", "toolchain_feature_set")
 
 package(default_visibility = ["//visibility:public"])
+
+gcc_toolchain(
+  name = "arm_none_eabi",
+  target_cpu = "@platforms//cpu:arm",
+  target_os = "@platforms//os:none",
+)
 
 toolchain_feature(
   name = "embedded",

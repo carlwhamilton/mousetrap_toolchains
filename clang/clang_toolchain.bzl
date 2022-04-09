@@ -1,6 +1,6 @@
 load("@mousetrap_toolchains//toolchain:toolchain_config.bzl", "toolchain_config")
 
-def clang_toolchain(name, target_cpu, target_os, tools, all_features):
+def clang_cc_toolchain(name, target_cpu, target_os, all_features):
   toolchain_config_name = "%s_config" % name
   toolchain_config(
     name = toolchain_config_name,
@@ -8,13 +8,17 @@ def clang_toolchain(name, target_cpu, target_os, tools, all_features):
     target_cpu = target_cpu,
     target_os = target_os,
     target_libc = "glibc",
-    tools = tools,
     all_features = all_features,
+    tools = [
+      ":cc",
+      ":cxx",
+      ":ar",
+      ":strip",
+    ],
     system_includes = ["/usr/include"])
 
-  cc_toolchain_name = "%s_cc_toolchain" % name
   native.cc_toolchain(
-    name = cc_toolchain_name,
+    name = name,
     toolchain_config = toolchain_config_name,
     all_files = ":all_files",
     compiler_files = ":compiler_files",
@@ -25,13 +29,13 @@ def clang_toolchain(name, target_cpu, target_os, tools, all_features):
     dwp_files = ":dwp_files",
     supports_param_files = True)
 
+def clang_toolchain(name, target_cpu, target_os):
   native.toolchain(
     name = name,
     target_compatible_with = [
       target_cpu,
       target_os,
     ],
-    toolchain = cc_toolchain_name,
+    toolchain = "@clang//:{name}".format(name = name),
     toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
-    visibility = ["//visibility:public"],
     tags = ["manual"])

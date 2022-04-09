@@ -1,9 +1,11 @@
-def linker_script(name, script, hdrs = []):
+def linker_script(name, script, deps = [], linkopts = [], **kwargs):
   native.cc_library(
     name = name,
-    hdrs = hdrs,
-    deps = [script],
-    linkopts = [
+    deps = deps + [
+      script
+    ],
+    linkopts = linkopts + [
       "-T $(location {script})".format(script = script),
     ],
+    **kwargs,
   )

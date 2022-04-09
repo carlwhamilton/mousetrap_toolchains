@@ -1,16 +1,10 @@
+load("@mousetrap_toolchains//clang:clang_toolchain.bzl", "clang_cc_toolchain")
 load("@mousetrap_toolchains//toolchain:toolchain_tool.bzl", "toolchain_tool")
-load("@mousetrap_toolchains//clang:clang_toolchain.bzl", "clang_toolchain")
 
-clang_toolchain(
-  name = "clang-x86_64-linux",
+clang_cc_toolchain(
+  name = "x86_64-linux",
   target_cpu = "@platforms//cpu:x86_64",
   target_os = "@platforms//os:linux",
-  tools = [
-    ":cc",
-    ":cxx",
-    ":ar",
-    ":strip",
-  ],
   all_features = [
     "@mousetrap_toolchains//clang:features",
   ],

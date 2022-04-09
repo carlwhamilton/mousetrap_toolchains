@@ -1,0 +1,13 @@
+cc_library(
+  name = "say",
+  hdrs = ["say.h"],
+  srcs = ["say.cc"],
+)
+
+cc_test(
+  name = "hello",
+  srcs = ["hello.cc"],
+  deps = [
+    ":say",
+  ],
+)

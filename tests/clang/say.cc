@@ -1,4 +1,4 @@
-#include "tests/say.h"
+#include "tests/clang/say.h"
 
 #include <iostream>
 

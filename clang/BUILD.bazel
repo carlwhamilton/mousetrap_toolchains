@@ -1,9 +1,16 @@
+load(":clang_toolchain.bzl", "clang_toolchain")
 load(
   "//toolchain:toolchain_feature.bzl",
   "toolchain_feature",
   "toolchain_feature_set")
 
 package(default_visibility = ["//visibility:public"])
+
+clang_toolchain(
+  name = "x86_64-linux",
+  target_cpu = "@platforms//cpu:x86_64",
+  target_os = "@platforms//os:linux",
+)
 
 toolchain_feature(
   name = "use_libcxx",
