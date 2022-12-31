@@ -14,6 +14,10 @@ _RELEASES = dict([
     name = "14.0.0",
     platform = "x86_64-linux-gnu-ubuntu-18.04",
     sha256 = "61582215dafafb7b576ea30cc136be92c877ba1f1c31ddbbd372d6d65622fef5"),
+  _release(
+    name = "15.0.6",
+    platform = "x86_64-linux-gnu-ubuntu-18.04",
+    sha256 = "38bc7f5563642e73e69ac5626724e206d6d539fbef653541b34cae0ba9c3f036"),
 ])
 
 def _get_release(name):
@@ -51,7 +55,7 @@ def _clang_repo(repo_ctx):
 clang_repo = repository_rule(
   implementation = _clang_repo,
   attrs = {
-    "release": attr.string(default = "14.0.0"),
+    "release": attr.string(default = "15.0.6"),
     "_build_template": attr.label(
       default = Label("//clang:clang_BUILD.bazel"),
       allow_single_file = True)
