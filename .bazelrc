@@ -1,2 +1,1 @@
-common --experimental_enable_bzlmod
-build --incompatible_enable_cc_toolchain_resolution
+import %workspace%/bazelrc
