@@ -1,5 +1,5 @@
 load("@mousetrap_toolchains//clang:clang_toolchain.bzl", "clang_cc_toolchain")
-load("@mousetrap_toolchains//toolchain:toolchain_tool.bzl", "toolchain_tool")
+load("@mousetrap_toolchains//:toolchain_tool.bzl", "toolchain_tool")
 
 clang_cc_toolchain(
   name = "x86_64-linux",

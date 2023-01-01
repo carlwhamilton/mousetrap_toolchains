@@ -1,5 +1,5 @@
 load(":gcc_toolchain.bzl", "gcc_toolchain")
-load("//toolchain:toolchain_feature.bzl", "toolchain_feature", "toolchain_feature_set")
+load("//:toolchain_feature.bzl", "toolchain_feature", "toolchain_feature_set")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -29,6 +29,6 @@ toolchain_feature_set(
   name = "features",
   deps = [
     ":embedded",
-    "//toolchain:features",
+    "//:features",
   ],
 )

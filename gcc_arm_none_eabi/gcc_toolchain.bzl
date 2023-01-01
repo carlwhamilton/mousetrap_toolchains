@@ -1,4 +1,4 @@
-load("@mousetrap_toolchains//toolchain:toolchain_config.bzl", "toolchain_config")
+load("@mousetrap_toolchains//:toolchain_config.bzl", "toolchain_config")
 
 def gcc_cc_toolchain(name, target_cpu, target_os, all_features):
   toolchain_config_name = "%s_config" % name

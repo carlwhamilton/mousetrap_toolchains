@@ -1,6 +1,6 @@
 load(":clang_toolchain.bzl", "clang_toolchain")
 load(
-  "//toolchain:toolchain_feature.bzl",
+  "//:toolchain_feature.bzl",
   "toolchain_feature",
   "toolchain_feature_set")
 
@@ -52,6 +52,6 @@ toolchain_feature_set(
     ":pthread",
     ":use_libcxx",
     ":use_lld",
-    "//toolchain:features",
+    "//:features",
   ],
 )
