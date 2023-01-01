@@ -1,28 +1,28 @@
-load ("//gcc_arm_none_eabi:linker_script.bzl", "linker_script")
+load("//gcc_arm_none_eabi:linker_script.bzl", "linker_script")
 
 platform(
-  name = "arm_none",
-  constraint_values = [
-    "@platforms//cpu:arm",
-    "@platforms//os:none",
-  ],
+    name = "arm_none",
+    constraint_values = [
+        "@platforms//cpu:arm",
+        "@platforms//os:none",
+    ],
 )
 
 cc_binary(
-  name = "blink",
-  srcs = ["blink.cc"],
-  deps = [":blink_ld"],
-  target_compatible_with = [
-    "@platforms//cpu:arm",
-    "@platforms//os:none",
-  ],
+    name = "blink",
+    srcs = ["blink.cc"],
+    target_compatible_with = [
+        "@platforms//cpu:arm",
+        "@platforms//os:none",
+    ],
+    deps = [":blink_ld"],
 )
 
 linker_script(
-  name = "blink_ld",
-  script = "blink.ld",
-  target_compatible_with = [
-    "@platforms//cpu:arm",
-    "@platforms//os:none",
-  ],
+    name = "blink_ld",
+    script = "blink.ld",
+    target_compatible_with = [
+        "@platforms//cpu:arm",
+        "@platforms//os:none",
+    ],
 )

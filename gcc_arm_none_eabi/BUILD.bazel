@@ -4,31 +4,31 @@ load("//:toolchain_feature.bzl", "toolchain_feature", "toolchain_feature_set")
 package(default_visibility = ["//visibility:public"])
 
 gcc_toolchain(
-  name = "arm_none_eabi",
-  target_cpu = "@platforms//cpu:arm",
-  target_os = "@platforms//os:none",
+    name = "arm_none_eabi",
+    target_cpu = "@platforms//cpu:arm",
+    target_os = "@platforms//os:none",
 )
 
 toolchain_feature(
-  name = "embedded",
-  enabled = True,
-  copts = [
-    "-specs=nano.specs",
-    "-mcpu=cortex-m0plus",
-  ],
-  cxxopts = [
-    "-fno-exceptions",
-    "-fno-rtti",
-  ],
-  linkopts = [
-    "-nostartfiles",
-  ],
+    name = "embedded",
+    copts = [
+        "-specs=nano.specs",
+        "-mcpu=cortex-m0plus",
+    ],
+    cxxopts = [
+        "-fno-exceptions",
+        "-fno-rtti",
+    ],
+    enabled = True,
+    linkopts = [
+        "-nostartfiles",
+    ],
 )
 
 toolchain_feature_set(
-  name = "features",
-  deps = [
-    ":embedded",
-    "//:features",
-  ],
+    name = "features",
+    deps = [
+        ":embedded",
+        "//:features",
+    ],
 )

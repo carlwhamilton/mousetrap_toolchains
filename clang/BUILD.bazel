@@ -1,57 +1,58 @@
 load(":clang_toolchain.bzl", "clang_toolchain")
 load(
-  "//:toolchain_feature.bzl",
-  "toolchain_feature",
-  "toolchain_feature_set")
+    "//:toolchain_feature.bzl",
+    "toolchain_feature",
+    "toolchain_feature_set",
+)
 
 package(default_visibility = ["//visibility:public"])
 
 clang_toolchain(
-  name = "x86_64-linux",
-  target_cpu = "@platforms//cpu:x86_64",
-  target_os = "@platforms//os:linux",
+    name = "x86_64-linux",
+    target_cpu = "@platforms//cpu:x86_64",
+    target_os = "@platforms//os:linux",
 )
 
 toolchain_feature(
-  name = "supports_start_end_lib",
-  enabled = True,
+    name = "supports_start_end_lib",
+    enabled = True,
 )
 
 toolchain_feature(
-  name = "pthread",
-  enabled = True,
-  copts = [
-    "-pthread",
-  ],
+    name = "pthread",
+    copts = [
+        "-pthread",
+    ],
+    enabled = True,
 )
 
 toolchain_feature(
-  name = "use_libcxx",
-  enabled = True,
-  cxxopts = [
-    "-stdlib=libc++",
-  ],
-  libs = [
-    "c++",
-    "c++abi",
-  ],
+    name = "use_libcxx",
+    cxxopts = [
+        "-stdlib=libc++",
+    ],
+    enabled = True,
+    libs = [
+        "c++",
+        "c++abi",
+    ],
 )
 
 toolchain_feature(
-  name = "use_lld",
-  enabled = True,
-  linkopts = [
-    "-fuse-ld=lld",
-  ],
+    name = "use_lld",
+    enabled = True,
+    linkopts = [
+        "-fuse-ld=lld",
+    ],
 )
 
 toolchain_feature_set(
-  name = "features",
-  deps = [
-    ":supports_start_end_lib",
-    ":pthread",
-    ":use_libcxx",
-    ":use_lld",
-    "//:features",
-  ],
+    name = "features",
+    deps = [
+        ":pthread",
+        ":supports_start_end_lib",
+        ":use_libcxx",
+        ":use_lld",
+        "//:features",
+    ],
 )

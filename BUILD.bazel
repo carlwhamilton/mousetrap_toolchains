@@ -1,104 +1,108 @@
 load(
-  "//:toolchain_feature.bzl",
-  "toolchain_feature",
-  "toolchain_feature_group",
-  "toolchain_feature_set")
+    "//:toolchain_feature.bzl",
+    "toolchain_feature",
+    "toolchain_feature_group",
+    "toolchain_feature_set",
+)
 
 package(default_visibility = ["//visibility:public"])
 
 # Include this feature if the linker supports the --start_lib and
 # --end_lib flags.
 toolchain_feature(
-  name = "no_legacy_features",
-  enabled = True,
+    name = "no_legacy_features",
+    enabled = True,
 )
 
 toolchain_feature(
-  name = "verbose",
-  copts = [
-    "--verbose",
-  ],
+    name = "verbose",
+    copts = [
+        "--verbose",
+    ],
 )
 
 toolchain_feature(
-  name = "pedantic",
-  enabled = True,
-  copts = [
-    "-Wall",
-    "-Werror",
-    "-pedantic",
-  ],
+    name = "pedantic",
+    copts = [
+        "-Wall",
+        "-Werror",
+        "-pedantic",
+    ],
+    enabled = True,
 )
 
 toolchain_feature(
-  name = "sections",
-  enabled = True,
-  copts = [
-    "-ffunction-sections",
-    "-fdata-sections",
-  ],
-  linkopts = [
-    "-Wl,-gc-sections",
-  ],
+    name = "sections",
+    copts = [
+        "-ffunction-sections",
+        "-fdata-sections",
+    ],
+    enabled = True,
+    linkopts = [
+        "-Wl,-gc-sections",
+    ],
 )
 
 toolchain_feature_group(name = "cxx_standard")
 
 toolchain_feature(
-  name = "cxx20",
-  enabled = True,
-  group = ":cxx_standard",
-  cxxopts = [
-    "-std=c++20",
-  ],
+    name = "cxx20",
+    cxxopts = [
+        "-std=c++20",
+    ],
+    enabled = True,
+    group = ":cxx_standard",
 )
 
 toolchain_feature_group(name = "compilation_mode")
 
 toolchain_feature(
-  name = "fastbuild",
-  group = ":compilation_mode",
-  copts = ["-O0"],
+    name = "fastbuild",
+    copts = ["-O0"],
+    group = ":compilation_mode",
 )
 
 toolchain_feature(
-  name = "dbg",
-  group = ":compilation_mode",
-  defines = ["NDEBUG"],
-  copts = ["-g", "-O0"],
+    name = "dbg",
+    copts = [
+        "-g",
+        "-O0",
+    ],
+    defines = ["NDEBUG"],
+    group = ":compilation_mode",
 )
 
 toolchain_feature(
-  name = "opt",
-  group = ":compilation_mode",
-  copts = ["-O2"],
+    name = "opt",
+    copts = ["-O2"],
+    group = ":compilation_mode",
 )
 
 toolchain_feature_group(name = "linking_mode")
 
 toolchain_feature(
-  name = "static_linking_mode",
-  group = ":linking_mode",
-  linkopts = ["-static"],
+    name = "static_linking_mode",
+    group = ":linking_mode",
+    linkopts = ["-static"],
 )
 
 toolchain_feature(
-  name = "dynamic_linking_mode",
-  group = ":linking_mode",
+    name = "dynamic_linking_mode",
+    group = ":linking_mode",
 )
 
 toolchain_feature_set(
-  name = "features",
-  deps = [
-    ":no_legacy_features",
-    ":verbose",
-    ":pedantic",
-    ":sections",
-    ":cxx20",
-    ":fastbuild",
-    ":dbg",
-    ":opt",
-    ":static_linking_mode",
-    ":dynamic_linking_mode",
-  ],
+    name = "features",
+    deps = [
+        ":cxx20",
+        ":dbg",
+        ":dynamic_linking_mode",
+        ":fastbuild",
+        ":no_legacy_features",
+        ":opt",
+        ":pedantic",
+        ":sections",
+        ":static_linking_mode",
+        ":verbose",
+    ],
 )

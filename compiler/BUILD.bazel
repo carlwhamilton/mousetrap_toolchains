@@ -3,11 +3,11 @@ package(default_visibility = ["//visibility:public"])
 constraint_setting(name = "compiler")
 
 constraint_value(
-  name = "clang",
-  constraint_setting = ":compiler",
+    name = "clang",
+    constraint_setting = ":compiler",
 )
 
 constraint_value(
-  name = "gcc_arm_none_eabi",
-  constraint_setting = ":compiler",
+    name = "gcc_arm_none_eabi",
+    constraint_setting = ":compiler",
 )

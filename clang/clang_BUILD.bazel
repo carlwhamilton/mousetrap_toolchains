@@ -2,115 +2,115 @@ load("@mousetrap_toolchains//clang:clang_toolchain.bzl", "clang_cc_toolchain")
 load("@mousetrap_toolchains//:toolchain_tool.bzl", "toolchain_tool")
 
 clang_cc_toolchain(
-  name = "x86_64-linux",
-  target_cpu = "@platforms//cpu:x86_64",
-  target_os = "@platforms//os:linux",
-  all_features = [
-    "@mousetrap_toolchains//clang:features",
-  ],
-)
-
-toolchain_tool(
-  name = "cc",
-  executable = "bin/clang",
-  deps = [
-    "bin/clang-{major_version}",
-  ],
-)
-
-toolchain_tool(
-  name = "cxx",
-  executable = "bin/clang++",
-  deps = [
-    ":cc",
-  ],
-)
-
-toolchain_tool(
-  name = "ar",
-  executable = "bin/llvm-ar",
-)
-
-toolchain_tool(
-  name = "ld",
-  executable = "bin/ld.lld",
-  deps = [
-    "bin/lld",
-  ],
-)
-
-toolchain_tool(
-  name = "strip",
-  executable = "bin/llvm-strip",
-)
-
-toolchain_tool(
-  name = "objcopy",
-  executable = "bin/llvm-objcopy",
-)
-
-filegroup(
-  name = "all_files",
-  srcs = [":compiler_files"],
-)
-
-filegroup(
-  name = "compiler_files",
-  srcs = [
-    ":cc",
-    ":cxx",
-    ":headers",
-  ],
-)
-
-filegroup(
-  name = "ar_files",
-  srcs = [":ar"],
-)
-
-filegroup(
-  name = "linker_files",
-  srcs = [
-    ":cxx",
-    ":ld",
-    ":ar",
-    ":libs",
-  ],
-)
-
-filegroup(
-  name = "strip_files",
-  srcs = [":strip"],
-)
-
-filegroup(
-  name = "objcopy_files",
-  srcs = [":objcopy"],
-)
-
-filegroup(
-  name = "dwp_files",
-  srcs = [],
-)
-
-filegroup(
-  name = "headers",
-  srcs = glob(
-    include = [
-      "include/c++/**",
-      "include/x86_64-unknown-linux-gnu/c++/**",
-      "lib/clang/{version}/include/**",
-    ]
-  ),
-)
-
-filegroup(
-  name = "libs",
-  srcs = glob(
-    include = [
-      "lib/libc++*.a",
-      "lib/x86_64-unknown-linux-gnu/**",
-      "lib/clang/{version}/lib/x86_64-unknown-linux-gnu/**",
+    name = "x86_64-linux",
+    target_cpu = "@platforms//cpu:x86_64",
+    target_os = "@platforms//os:linux",
+    all_features = [
+        "@mousetrap_toolchains//clang:features",
     ],
-  ),
+)
+
+toolchain_tool(
+    name = "cc",
+    executable = "bin/clang",
+    deps = [
+        "bin/clang-{major_version}",
+    ],
+)
+
+toolchain_tool(
+    name = "cxx",
+    executable = "bin/clang++",
+    deps = [
+        ":cc",
+    ],
+)
+
+toolchain_tool(
+    name = "ar",
+    executable = "bin/llvm-ar",
+)
+
+toolchain_tool(
+    name = "ld",
+    executable = "bin/ld.lld",
+    deps = [
+        "bin/lld",
+    ],
+)
+
+toolchain_tool(
+    name = "strip",
+    executable = "bin/llvm-strip",
+)
+
+toolchain_tool(
+    name = "objcopy",
+    executable = "bin/llvm-objcopy",
+)
+
+filegroup(
+    name = "all_files",
+    srcs = [":compiler_files"],
+)
+
+filegroup(
+    name = "compiler_files",
+    srcs = [
+        ":cc",
+        ":cxx",
+        ":headers",
+    ],
+)
+
+filegroup(
+    name = "ar_files",
+    srcs = [":ar"],
+)
+
+filegroup(
+    name = "linker_files",
+    srcs = [
+        ":cxx",
+        ":ld",
+        ":ar",
+        ":libs",
+    ],
+)
+
+filegroup(
+    name = "strip_files",
+    srcs = [":strip"],
+)
+
+filegroup(
+    name = "objcopy_files",
+    srcs = [":objcopy"],
+)
+
+filegroup(
+    name = "dwp_files",
+    srcs = [],
+)
+
+filegroup(
+    name = "headers",
+    srcs = glob(
+        include = [
+            "include/c++/**",
+            "include/x86_64-unknown-linux-gnu/c++/**",
+            "lib/clang/{version}/include/**",
+        ],
+    ),
+)
+
+filegroup(
+    name = "libs",
+    srcs = glob(
+        include = [
+            "lib/libc++*.a",
+            "lib/x86_64-unknown-linux-gnu/**",
+            "lib/clang/{version}/lib/x86_64-unknown-linux-gnu/**",
+        ],
+    ),
 )

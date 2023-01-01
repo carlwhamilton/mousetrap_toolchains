@@ -2,132 +2,132 @@ load("@mousetrap_toolchains//gcc_arm_none_eabi:gcc_toolchain.bzl", "gcc_cc_toolc
 load("@mousetrap_toolchains//:toolchain_tool.bzl", "toolchain_tool")
 
 gcc_cc_toolchain(
-  name = "arm_none_eabi",
-  target_cpu = "@platforms//cpu:arm",
-  target_os = "@platforms//os:none",
-  all_features = [
-    "@mousetrap_toolchains//gcc_arm_none_eabi:features",
-  ],
-)
-
-toolchain_tool(
-  name = "cc",
-  executable = "bin/arm-none-eabi-gcc",
-  deps = [
-    "lib/gcc/arm-none-eabi/{version}/cc1",
-    "lib/gcc/arm-none-eabi/{version}/cc1plus",
-    "arm-none-eabi/bin/as",
-    ":specs",
-  ],
-)
-
-toolchain_tool(
-  name = "cxx",
-  executable = "bin/arm-none-eabi-g++",
-  deps = [
-    ":cc",
-  ],
-)
-
-toolchain_tool(
-  name = "ar",
-  executable = "bin/arm-none-eabi-ar",
-)
-
-toolchain_tool(
-  name = "ld",
-  executable = "bin/arm-none-eabi-ld",
-)
-
-toolchain_tool(
-  name = "strip",
-  executable = "bin/arm-none-eabi-strip",
-)
-
-toolchain_tool(
-  name = "objcopy",
-  executable = "bin/arm-none-eabi-objcopy",
-)
-
-filegroup(
-  name = "all_files",
-  srcs = [":compiler_files"],
-)
-
-filegroup(
-  name = "compiler_files",
-  srcs = [
-    ":cc",
-    ":cxx",
-    ":headers",
-  ],
-)
-
-filegroup(
-  name = "ar_files",
-  srcs = [":ar"],
-)
-
-filegroup(
-  name = "linker_files",
-  srcs = [
-    ":cxx",
-    ":ld",
-    ":ar",
-    ":libs",
-    ":plugins",
-  ],
-)
-
-filegroup(
-  name = "strip_files",
-  srcs = [":strip"],
-)
-
-filegroup(
-  name = "objcopy_files",
-  srcs = [":objcopy"],
-)
-
-filegroup(
-  name = "dwp_files",
-  srcs = [],
-)
-
-filegroup(
-  name = "specs",
-  srcs = glob(
-    include = [
-      "arm-none-eabi/lib/**/*.specs",
+    name = "arm_none_eabi",
+    target_cpu = "@platforms//cpu:arm",
+    target_os = "@platforms//os:none",
+    all_features = [
+        "@mousetrap_toolchains//gcc_arm_none_eabi:features",
     ],
-  ),
 )
 
-filegroup(
-  name = "headers",
-  srcs = glob(
-    include = [
-      "arm-none-eabi/include/**",
-      "arm-none-eabi/include/c++/{version}/**",
-      "lib/gcc/arm-none-eabi/{version}/include/**",
-    ]
-  ),
-)
-
-filegroup(
-  name = "libs",
-  srcs = glob(
-    include = [
-      "arm-none-eabi/lib/**/*.a",
+toolchain_tool(
+    name = "cc",
+    executable = "bin/arm-none-eabi-gcc",
+    deps = [
+        "lib/gcc/arm-none-eabi/{version}/cc1",
+        "lib/gcc/arm-none-eabi/{version}/cc1plus",
+        "arm-none-eabi/bin/as",
+        ":specs",
     ],
-  ),
+)
+
+toolchain_tool(
+    name = "cxx",
+    executable = "bin/arm-none-eabi-g++",
+    deps = [
+        ":cc",
+    ],
+)
+
+toolchain_tool(
+    name = "ar",
+    executable = "bin/arm-none-eabi-ar",
+)
+
+toolchain_tool(
+    name = "ld",
+    executable = "bin/arm-none-eabi-ld",
+)
+
+toolchain_tool(
+    name = "strip",
+    executable = "bin/arm-none-eabi-strip",
+)
+
+toolchain_tool(
+    name = "objcopy",
+    executable = "bin/arm-none-eabi-objcopy",
 )
 
 filegroup(
-  name = "plugins",
-  srcs = glob(
-    include = [
-      "lib/gcc/arm-none-eabi/{version}/liblto_plugin.so*",
+    name = "all_files",
+    srcs = [":compiler_files"],
+)
+
+filegroup(
+    name = "compiler_files",
+    srcs = [
+        ":cc",
+        ":cxx",
+        ":headers",
     ],
-  ),
+)
+
+filegroup(
+    name = "ar_files",
+    srcs = [":ar"],
+)
+
+filegroup(
+    name = "linker_files",
+    srcs = [
+        ":cxx",
+        ":ld",
+        ":ar",
+        ":libs",
+        ":plugins",
+    ],
+)
+
+filegroup(
+    name = "strip_files",
+    srcs = [":strip"],
+)
+
+filegroup(
+    name = "objcopy_files",
+    srcs = [":objcopy"],
+)
+
+filegroup(
+    name = "dwp_files",
+    srcs = [],
+)
+
+filegroup(
+    name = "specs",
+    srcs = glob(
+        include = [
+            "arm-none-eabi/lib/**/*.specs",
+        ],
+    ),
+)
+
+filegroup(
+    name = "headers",
+    srcs = glob(
+        include = [
+            "arm-none-eabi/include/**",
+            "arm-none-eabi/include/c++/{version}/**",
+            "lib/gcc/arm-none-eabi/{version}/include/**",
+        ],
+    ),
+)
+
+filegroup(
+    name = "libs",
+    srcs = glob(
+        include = [
+            "arm-none-eabi/lib/**/*.a",
+        ],
+    ),
+)
+
+filegroup(
+    name = "plugins",
+    srcs = glob(
+        include = [
+            "lib/gcc/arm-none-eabi/{version}/liblto_plugin.so*",
+        ],
+    ),
 )
