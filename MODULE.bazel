@@ -7,10 +7,10 @@ bazel_dep(name = "bazel_skylib", version = "1.3.0")
 bazel_dep(name = "platforms", version = "0.0.5")
 bazel_dep(name = "rules_cc", version = "0.0.2")
 
-clang = use_extension("@mousetrap_toolchains//bzlmod:extensions.bzl", "clang")
+clang = use_extension("//:module_extensions.bzl", "clang")
 use_repo(clang, "clang")
 
-gcc_arm_none_eabi = use_extension("@mousetrap_toolchains//bzlmod:extensions.bzl", "gcc_arm_none_eabi")
+gcc_arm_none_eabi = use_extension("//:module_extensions.bzl", "gcc_arm_none_eabi")
 use_repo(gcc_arm_none_eabi, "gcc_arm_none_eabi")
 
 register_toolchains(
