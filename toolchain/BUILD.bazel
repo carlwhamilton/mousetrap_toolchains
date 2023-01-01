@@ -9,19 +9,6 @@ package(default_visibility = ["//visibility:public"])
 # Include this feature if the linker supports the --start_lib and
 # --end_lib flags.
 toolchain_feature(
-  name = "supports_start_end_lib",
-  enabled = True,
-)
-
-toolchain_feature(
-  name = "pthread",
-  enabled = True,
-  copts = [
-    "-pthread",
-  ],
-)
-
-toolchain_feature(
   name = "no_legacy_features",
   enabled = True,
 )

@@ -104,10 +104,6 @@ def _base_c_flags():
     flag_group(
       expand_if_available = "dependency_file",
       flags = ["-MMD", "-MF", "%{dependency_file}"]),
-    flag_group(
-      expand_if_available = "user_compile_flags",
-      iterate_over = "user_compile_flags",
-      flags = ["%{user_compile_flags}"]),
   ]
 
 def _base_archive_flags():
@@ -129,9 +125,6 @@ def _base_link_flags():
     flag_group(
       expand_if_available = "output_execpath",
       flags = ["-o", "%{output_execpath}"]),
-    flag_group(
-      iterate_over = "user_link_flags",
-      flags = ["%{user_link_flags}"]),
     flag_group(
       expand_if_available = "linker_param_file",
       flags = ["@%{linker_param_file}"]),
@@ -180,6 +173,28 @@ def _base_feature():
     link_flags = _base_link_flags(),
     lib_flags = _base_lib_flags())
 
+def _user_c_flags():
+    return [
+        flag_group(
+            expand_if_available = "user_compile_flags",
+            iterate_over = "user_compile_flags",
+            flags = ["%{user_compile_flags}"]),
+    ]
+
+def _user_link_flags():
+    return [
+        flag_group(
+            iterate_over = "user_link_flags",
+            flags = ["%{user_link_flags}"]),
+    ]
+
+def _user_feature():
+    return feature_from_flags(
+        name = "user",
+        enabled = True,
+        c_flags = _user_c_flags(),
+        link_flags = _user_link_flags())
+
 def _toolchain_tool(ctx, name):
   for tool in ctx.attr.tools:
     if tool.label.name == name:
@@ -205,7 +220,7 @@ def _toolchain_config(ctx):
   ]
 
   all_features = merge_feature_sets(ctx.attr.all_features)
-  features = [_base_feature()] + all_features.values()
+  features = [_base_feature()] + all_features.values() + [_user_feature()]
 
   compiler = ctx.attr.compiler.label.name
   target_cpu = ctx.attr.target_cpu.label.name
