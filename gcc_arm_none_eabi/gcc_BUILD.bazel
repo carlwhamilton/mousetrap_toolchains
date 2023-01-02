@@ -1,10 +1,16 @@
 load("@mousetrap_toolchains//gcc_arm_none_eabi:gcc_toolchain.bzl", "gcc_cc_toolchain")
-load("@mousetrap_toolchains//:toolchain_tool.bzl", "toolchain_tool")
+load("@mousetrap_toolchains//:toolchain_tools.bzl", "toolchain_tool")
 
 gcc_cc_toolchain(
     name = "arm_none_eabi",
     target_cpu = "@platforms//cpu:arm",
     target_os = "@platforms//os:none",
+    tools = [
+        ":cc",
+        ":cxx",
+        ":ar",
+        ":strip",
+    ],
     all_features = [
         "@mousetrap_toolchains//gcc_arm_none_eabi:features",
     ],

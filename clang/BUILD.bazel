@@ -1,6 +1,6 @@
 load(":clang_toolchain.bzl", "clang_toolchain")
 load(
-    "//:toolchain_feature.bzl",
+    "//:toolchain_features.bzl",
     "toolchain_feature",
     "toolchain_feature_set",
 )

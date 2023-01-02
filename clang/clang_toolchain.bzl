@@ -1,6 +1,6 @@
 load("@mousetrap_toolchains//:toolchain_config.bzl", "toolchain_config")
 
-def clang_cc_toolchain(name, target_cpu, target_os, all_features):
+def clang_cc_toolchain(name, target_cpu, target_os, tools, all_features):
     toolchain_config_name = "%s_config" % name
     toolchain_config(
         name = toolchain_config_name,
@@ -8,13 +8,8 @@ def clang_cc_toolchain(name, target_cpu, target_os, all_features):
         target_cpu = target_cpu,
         target_os = target_os,
         target_libc = "glibc",
+        tools = tools,
         all_features = all_features,
-        tools = [
-            ":cc",
-            ":cxx",
-            ":ar",
-            ":strip",
-        ],
         system_includes = ["/usr/include"],
     )
 

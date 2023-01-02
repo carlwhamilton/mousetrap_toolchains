@@ -1,5 +1,9 @@
 load(":gcc_toolchain.bzl", "gcc_toolchain")
-load("//:toolchain_feature.bzl", "toolchain_feature", "toolchain_feature_set")
+load(
+    "//:toolchain_features.bzl",
+    "toolchain_feature",
+    "toolchain_feature_set",
+)
 
 package(default_visibility = ["//visibility:public"])
 

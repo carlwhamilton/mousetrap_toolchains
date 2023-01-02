@@ -1,5 +1,5 @@
 load(
-    "//:toolchain_feature.bzl",
+    "//:toolchain_features.bzl",
     "toolchain_feature",
     "toolchain_feature_group",
     "toolchain_feature_set",
