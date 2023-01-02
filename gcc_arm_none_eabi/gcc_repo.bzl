@@ -1,4 +1,4 @@
-_ARM_ARCHIVE_URL = "https://developer.arm.com/-/media/Files/downloads/gnu/{name}/binrel/arm-gnu-toolchain-{name}-{platform}-arm-none-eabi.tar.xz"
+_ARCHIVE_URL = "https://developer.arm.com/-/media/Files/downloads/gnu/{name}/binrel/arm-gnu-toolchain-{name}-{platform}-arm-none-eabi.tar.xz"
 
 def _release(name, version, platform, sha256):
     release = struct(
@@ -24,13 +24,13 @@ def _find_release(name):
         fail("Failed to find gcc-arm-none-eabi release {}".format(name))
     return release
 
-def _archive_prefix(release):
+def _get_archive_prefix(release):
     return "arm-gnu-toolchain-{}-{}-arm-none-eabi".format(release.name, release.platform)
 
-def _archive_url(release):
-    return _ARM_ARCHIVE_URL.format(name = release.name, platform = release.platform)
+def _get_archive_url(release):
+    return _ARCHIVE_URL.format(name = release.name, platform = release.platform)
 
-def _build_substitutions(release):
+def _get_build_substitutions(release):
     return {
         "{version}": release.version,
     }
@@ -40,12 +40,12 @@ def _gcc_repo(repo_ctx):
     repo_ctx.template(
         "BUILD.bazel",
         repo_ctx.attr._build_template,
-        _build_substitutions(release),
+        _get_build_substitutions(release),
     )
     repo_ctx.download_and_extract(
-        url = _archive_url(release),
+        url = _get_archive_url(release),
         sha256 = release.sha256,
-        stripPrefix = _archive_prefix(release),
+        stripPrefix = _get_archive_prefix(release),
     )
 
 gcc_repo = repository_rule(
