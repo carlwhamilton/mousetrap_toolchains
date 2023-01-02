@@ -20,8 +20,8 @@ toolchain_tool(
     name = "cc",
     executable = "bin/arm-none-eabi-gcc",
     deps = [
-        "lib/gcc/arm-none-eabi/{version}/cc1",
-        "lib/gcc/arm-none-eabi/{version}/cc1plus",
+        "libexec/gcc/arm-none-eabi/{version}/cc1",
+        "libexec/gcc/arm-none-eabi/{version}/cc1plus",
         "arm-none-eabi/bin/as",
         ":specs",
     ],
