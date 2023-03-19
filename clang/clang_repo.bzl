@@ -20,6 +20,11 @@ _RELEASES = dict([
         platform = "x86_64-linux-gnu-ubuntu-18.04",
         sha256 = "38bc7f5563642e73e69ac5626724e206d6d539fbef653541b34cae0ba9c3f036",
     ),
+    _release(
+        name = "16.0.0",
+        platform = "x86_64-linux-gnu-ubuntu-18.04",
+        sha256 = "2b8a69798e8dddeb57a186ecac217a35ea45607cb2b3cf30014431cff4340ad1",
+    ),
 ])
 
 def _find_release(name):
