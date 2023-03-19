@@ -7,8 +7,6 @@ load(
 
 package(default_visibility = ["//visibility:public"])
 
-# Include this feature if the linker supports the --start_lib and
-# --end_lib flags.
 toolchain_feature(
     name = "no_legacy_features",
     enabled = True,
@@ -54,6 +52,14 @@ toolchain_feature(
     group = ":cxx_standard",
 )
 
+toolchain_feature(
+    name = "cxx2b",
+    cxxopts = [
+        "-std=c++2b",
+    ],
+    group = ":cxx_standard",
+)
+
 toolchain_feature_group(name = "compilation_mode")
 
 toolchain_feature(
@@ -95,6 +101,7 @@ toolchain_feature_set(
     name = "features",
     deps = [
         ":cxx20",
+        ":cxx2b",
         ":dbg",
         ":dynamic_linking_mode",
         ":fastbuild",
